@@ -14,7 +14,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
+Route::get('/', [App\Http\Controllers\StudyTimeController::class, 'index'])->name('study_time.index');
+
+Route::get('/welcome', function () {
     return view('welcome');
 });
 
@@ -28,4 +30,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
