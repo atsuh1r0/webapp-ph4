@@ -18,11 +18,16 @@ class StudyTimeController extends Controller
         // 現在が何周目かを取得
         $currentWeek = Date::now()->weekOfMonth;
 
+        // 学習時間を取得
+        $todayStudyHour = StudyTime::whereDate('created_at', Date::now())->sum('time');
+        $monthStudyHour = StudyTime::whereMonth('created_at', Date::now()->month)->sum('time');
+        $totalStudyHour = StudyTime::sum('time');
+
         return view('study_time/index')
             ->with('currentWeek', $currentWeek)
-            ->with('todayStudyHour', 0)
-            ->with('monthStudyHour', 10)
-            ->with('totalStudyHour', 20)
+            ->with('todayStudyHour', $todayStudyHour)
+            ->with('monthStudyHour', $monthStudyHour)
+            ->with('totalStudyHour', $totalStudyHour)
             ->with('displayYear', Date::now()->year)
             ->with('displayMonth', Date::now()->month);
     }
