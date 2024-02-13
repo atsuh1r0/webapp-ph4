@@ -26,6 +26,7 @@ Route::get('/dashboard', function () {
 
 Route::middleware('auth')->group(function () {
     Route::get('/', [App\Http\Controllers\StudyTimeController::class, 'index'])->name('study_time.index');
+    Route::post('/store', [App\Http\Controllers\StudyTimeController::class, 'store'])->name('study_time.store');
     Route::get('/get-barChart-data', [StudyTimeController::class, 'getBarChartData']);
     Route::get('/get-languagesPieChart-data', [StudyTimeController::class, 'getLanguagesPieChartData']);
     Route::get('/get-contentsPieChart-data', [StudyTimeController::class, 'getContentsPieChartData']);

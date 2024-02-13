@@ -109,4 +109,18 @@ class StudyTimeController extends Controller
         }
         return response()->json($data);
     }
+
+    /**
+     * 学習時間の記録を追加
+     */
+    public function store(Request $request)
+    {
+        $studyTime = new StudyTime();
+        $studyTime->created_at = $request->date;
+        $studyTime->time = $request->time;
+        $studyTime->language_id = $request->languages;
+        $studyTime->content_id = $request->contents;
+        $studyTime->save();
+        return redirect('/');
+    }
 }

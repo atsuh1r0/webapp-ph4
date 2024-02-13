@@ -69,25 +69,25 @@
             </div>
             <h2>学習時間の記録</h2>
 
-            <form action="/study_time" method="post">
+            <form action="{{ route('study_time.store') }}" method="post">
                 @csrf
                 <p>学習日</p>
                 <input type="date" name="date" required>
                 <p>学習言語</p>
                 <select name="languages">
-                    <option value="HTML">HTML</option>
-                    <option value="CSS">CSS</option>
-                    <option value="JavaScript">JavaScript</option>
-                    <option value="PHP">PHP</option>
-                    <option value="Laravel">Laravel</option>
+                    <option value="1">HTML</option>
+                    <option value="2">CSS</option>
+                    <option value="3">JavaScript</option>
+                    <option value="4">PHP</option>
+                    <option value="5">Laravel</option>
                 </select>
                 <p>学習コンテンツ</p>
                 <select name="contents">
-                    <option value="ドットインストール">ドットインストール</option>
-                    <option value="Progate">Progate</option>
-                    <option value="Udemy">Udemy</option>
-                    <option value="書籍">書籍</option>
-                    <option value="その他">その他</option>
+                    <option value="1">ドットインストール</option>
+                    <option value="2">Progate</option>
+                    <option value="3">Udemy</option>
+                    <option value="4">書籍</option>
+                    <option value="5">その他</option>
                 </select>
                 <p>学習時間</p>
                 <input type="number" name="time" required>
