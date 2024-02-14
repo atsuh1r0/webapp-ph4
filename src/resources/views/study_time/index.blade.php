@@ -14,8 +14,15 @@
         <div class="flex items-center gap-4">
             <img src="/img/logo.svg" alt="logo">
             <p class="text-[#97b9d1]">{{ $currentWeek }}th week</p>
+            <p class="text-gray-500">こんにちは、{{ Auth::user()->name }}さん</p>
         </div>
-        <button id="openModalButton" class="bg-gradient-to-r text-white from-blue-500 to-blue-100 px-20 py-2 rounded-xl">記録・投稿</button>
+        <div class="flex items-center gap-4">
+            <form action="{{ route('logout') }}" method="POST" class="inline">
+                @csrf
+                <button type="submit" class="text-gray-500">ログアウト</button>
+            </form>
+            <button id="openModalButton" class="bg-gradient-to-r text-white from-blue-500 to-blue-100 px-20 py-2 rounded-xl">記録・投稿</button>
+        </div>
     </header>
     <main class="bg-gray-200">
         <div class="flex justify-center pt-4">

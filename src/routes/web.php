@@ -30,6 +30,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/get-barChart-data', [StudyTimeController::class, 'getBarChartData']);
     Route::get('/get-languagesPieChart-data', [StudyTimeController::class, 'getLanguagesPieChartData']);
     Route::get('/get-contentsPieChart-data', [StudyTimeController::class, 'getContentsPieChartData']);
+    Route::post('/logout', [App\Http\Controllers\Auth\AuthenticatedSessionController::class, 'destroy'])->name('logout');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
