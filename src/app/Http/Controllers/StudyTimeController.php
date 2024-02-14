@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Date;
 use App\Models\StudyTime;
 use App\Models\Languages;
 use App\Models\Contents;
+use Illuminate\Support\Facades\Auth;
 
 class StudyTimeController extends Controller
 {
@@ -15,13 +16,15 @@ class StudyTimeController extends Controller
      */
     public function index()
     {
+        $user = Auth::user();
+
         // 現在が何周目かを取得
         $currentWeek = Date::now()->weekOfMonth;
 
         // 学習時間を取得
-        $todayStudyHour = StudyTime::whereDate('created_at', Date::now())->sum('time');
-        $monthStudyHour = StudyTime::whereMonth('created_at', Date::now()->month)->sum('time');
-        $totalStudyHour = StudyTime::sum('time');
+        $todayStudyHour = $user->studyTimes()->whereDate('created_at', Date::now())->sum('time');
+        $monthStudyHour = $user->studyTimes()->whereMonth('created_at', Date::now()->month)->sum('time');
+        $totalStudyHour = $user->studyTimes()->sum('time');
 
         return view('study_time/index')
             ->with('currentWeek', $currentWeek)
@@ -37,11 +40,13 @@ class StudyTimeController extends Controller
      */
     public function getBarChartData()
     {
+        $user = Auth::user();
+
         // 今月の1日の0時0分0秒
         $startOfMonth = now()->startOfMonth();
         // 今月の最終日の23時59分59秒
         $endOfMonth = now()->endOfMonth();
-        $studyTimes = StudyTime::whereBetween('created_at', [$startOfMonth, $endOfMonth])
+        $studyTimes = $user->studyTimes()->whereBetween('created_at', [$startOfMonth, $endOfMonth])
             ->selectRaw('DATE_FORMAT(created_at, "%d") AS date')
             ->selectRaw('SUM(time) AS timeOfDay')
             ->groupBy('date')
@@ -70,6 +75,8 @@ class StudyTimeController extends Controller
      */
     public function getLanguagesPieChartData()
     {
+        $user = Auth::user();
+
         $languages = Languages::all();
         $data = collect();
         foreach ($languages as $language) {
@@ -78,7 +85,7 @@ class StudyTimeController extends Controller
             $startOfMonth = now()->startOfMonth();
             // 今月の最終日の23時59分59秒
             $endOfMonth = now()->endOfMonth();
-            $amount = StudyTime::whereBetween('created_at', [$startOfMonth, $endOfMonth])
+            $amount = $user->studyTimes()->whereBetween('created_at', [$startOfMonth, $endOfMonth])
                 ->where('language_id', $language->id)
                 ->sum('time');
             $data->push([
@@ -95,6 +102,8 @@ class StudyTimeController extends Controller
      */
     public function getContentsPieChartData()
     {
+        $user = Auth::user();
+
         $contents = Contents::all();
         $data = collect();
         foreach ($contents as $content) {
@@ -103,7 +112,7 @@ class StudyTimeController extends Controller
             $startOfMonth = now()->startOfMonth();
             // 今月の最終日の23時59分59秒
             $endOfMonth = now()->endOfMonth();
-            $amount = StudyTime::whereBetween('created_at', [$startOfMonth, $endOfMonth])
+            $amount = $user->studyTimes()->whereBetween('created_at', [$startOfMonth, $endOfMonth])
                 ->where('content_id', $content->id)
                 ->sum('time');
             $data->push([
@@ -120,6 +129,8 @@ class StudyTimeController extends Controller
      */
     public function store(Request $request)
     {
+        $user = Auth::user();
+
         try {
             foreach ($request->languages as $language) {
                 foreach ($request->contents as $content) {
@@ -128,6 +139,7 @@ class StudyTimeController extends Controller
                     $studyTime->time = $request->time / (count($request->languages) * count($request->contents));
                     $studyTime->language_id = $language;
                     $studyTime->content_id = $content;
+                    $studyTime->user_id = $user->id;
                     $studyTime->save();
                 }
             }
