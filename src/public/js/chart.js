@@ -19,7 +19,6 @@
 
     const ctx = document.getElementById('studyHoursGraph');
     const context = ctx.getContext('2d');
-    console.log(context);
     const grad = context.createLinearGradient( 0 , 200 , 0 , 0 ) ;
     grad.addColorStop(0.0 , '#0f71bc');
     grad.addColorStop(1.0 , "#3ccfff");

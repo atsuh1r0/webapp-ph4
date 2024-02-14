@@ -120,12 +120,20 @@ class StudyTimeController extends Controller
      */
     public function store(Request $request)
     {
-        $studyTime = new StudyTime();
-        $studyTime->created_at = $request->date;
-        $studyTime->time = $request->time;
-        $studyTime->language_id = $request->languages;
-        $studyTime->content_id = $request->contents;
-        $studyTime->save();
-        return redirect('/');
+        try {
+            foreach ($request->languages as $language) {
+                foreach ($request->contents as $content) {
+                    $studyTime = new StudyTime();
+                    $studyTime->created_at = $request->date;
+                    $studyTime->time = $request->time / (count($request->languages) * count($request->contents));
+                    $studyTime->language_id = $language;
+                    $studyTime->content_id = $content;
+                    $studyTime->save();
+                }
+            }
+            return redirect('/')->with('success', '学習時間を記録しました');
+        } catch (\Exception $e) {
+            return redirect('/')->with('error', '学習時間の記録に失敗しました');
+        }
     }
 }

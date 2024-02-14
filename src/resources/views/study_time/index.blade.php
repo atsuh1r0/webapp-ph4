@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>webapp-ph4</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css">
     @vite('resources/css/app.css')
 </head>
 
@@ -74,21 +75,28 @@
                 <p>学習日</p>
                 <input type="date" name="date" required>
                 <p>学習言語</p>
-                <select name="languages">
-                    <option value="1">HTML</option>
-                    <option value="2">CSS</option>
-                    <option value="3">JavaScript</option>
-                    <option value="4">PHP</option>
-                    <option value="5">Laravel</option>
-                </select>
+                <label>
+                    <input type="checkbox" name="languages[]" value="1">HTML
+                </label>
+                <label>
+                    <input type="checkbox" name="languages[]" value="2">CSS
+                </label>
+                <label>
+                    <input type="checkbox" name="languages[]" value="3">JavaScript
+                </label>
+                <label>
+                    <input type="checkbox" name="languages[]" value="4">PHP
+                </label>
                 <p>学習コンテンツ</p>
-                <select name="contents">
-                    <option value="1">ドットインストール</option>
-                    <option value="2">Progate</option>
-                    <option value="3">Udemy</option>
-                    <option value="4">書籍</option>
-                    <option value="5">その他</option>
-                </select>
+                <label>
+                    <input type="checkbox" name="contents[]" value="1">ドットインストール
+                </label>
+                <label>
+                    <input type="checkbox" name="contents[]" value="2">Progate
+                </label>
+                <label>
+                    <input type="checkbox" name="contents[]" value="3">Udemy
+                </label>
                 <p>学習時間</p>
                 <input type="number" name="time" required>
                 <button type="submit" class="block mx-auto p-4 text-white bg-gradient-to-r from-blue-500 to-blue-100">記録</button>
@@ -97,9 +105,21 @@
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js" integrity="sha512-ElRFoEQdI5Ht6kZvyzXhYG9NqjtkmlkfYk0wr6wHxU9JEHakS7UJZNeml5ALk+8IKlU6jDgMabC3vkumRokgJA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.1.0"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script src="https://kit.fontawesome.com/afb3b2864c.js" crossorigin="anonymous"></script>
     <script src="/js/chart.js"></script>
     <script src="/js/modal.js"></script>
+    @if(session('success'))
+    <script>
+        toastr.success('新たな学習時間を記録しました');
+    </script>
+    @endif
+    @if(session('error'))
+    <script>
+        toastr.error('学習時間の記録に失敗しました');
+    </script>
+    @endif
 </body>
 
 </html>
