@@ -14,5 +14,20 @@ modalCloseButton.addEventListener('click', () => {
     modal.classList.add('hidden');
 });
 
+function showLoading() {
+    document.getElementById('loading').style.display = 'block';
+    document.getElementById('studyTimeForm').style.display = 'none';
+}
+
+function hideLoading() {
+    document.getElementById('loading').style.display = 'none';
+    document.getElementById('studyTimeForm').style.display = 'block';
+}
+
+document.getElementById('studyTimeForm').addEventListener('submit', function() {
+    alert('Submitted');
+    hideLoading();
+});
+
 
 

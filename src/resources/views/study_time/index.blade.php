@@ -69,8 +69,7 @@
                 <i class="fas fa-times"></i>
             </div>
             <h2>学習時間の記録</h2>
-
-            <form action="{{ route('study_time.store') }}" method="post">
+            <form action="{{ route('study_time.store') }}" method="post" onsubmit="showLoading()" id="studyTimeForm">
                 @csrf
                 <p>学習日</p>
                 <input type="date" name="date" required>
@@ -101,6 +100,11 @@
                 <input type="number" name="time" required>
                 <button type="submit" class="block mx-auto p-4 text-white bg-gradient-to-r from-blue-500 to-blue-100">記録</button>
             </form>
+            <div id="loading" style="display: none;">
+                <div className="flex justify-center" aria-label="読み込み中">
+                    <div className="animate-spin h-10 w-10 border-4 border-blue-500 rounded-full border-t-transparent"></div>
+                </div>
+            </div>
         </div>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js" integrity="sha512-ElRFoEQdI5Ht6kZvyzXhYG9NqjtkmlkfYk0wr6wHxU9JEHakS7UJZNeml5ALk+8IKlU6jDgMabC3vkumRokgJA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
