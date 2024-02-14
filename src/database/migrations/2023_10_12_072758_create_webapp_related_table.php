@@ -31,6 +31,7 @@ return new class extends Migration
 
             $table->foreignId('language_id')->constrained('languages');
             $table->foreignId('content_id')->constrained('contents');
+            $table->foreignId('user_id')->constrained('users');
             $table->timestamps();
         });
     }

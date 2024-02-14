@@ -19,5 +19,11 @@ class StudyTime extends Model
         'language_id',
         'content_id',
         'created_at',
+        'user_id'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

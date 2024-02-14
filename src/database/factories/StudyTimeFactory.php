@@ -21,6 +21,7 @@ class StudyTimeFactory extends Factory
             'time' => $this->faker->numberBetween(1, 5),
             'language_id' => $this->faker->numberBetween(1, 8),
             'content_id' => $this->faker->numberBetween(1, 3),
+            'user_id' => $this->faker->numberBetween(1, 3),
             'created_at' => $registerDate,
             'updated_at' => $registerDate,
         ];

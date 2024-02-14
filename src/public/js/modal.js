@@ -25,7 +25,6 @@ function hideLoading() {
 }
 
 document.getElementById('studyTimeForm').addEventListener('submit', function() {
-    alert('Submitted');
     hideLoading();
 });
 
