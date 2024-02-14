@@ -17,6 +17,7 @@
             <p class="text-gray-500">こんにちは、{{ Auth::user()->name }}さん</p>
         </div>
         <div class="flex items-center gap-4">
+            <a href="{{ route('admin.index') }}" class="text-gray-500">管理画面へ</a>
             <form action="{{ route('logout') }}" method="POST" class="inline">
                 @csrf
                 <button type="submit" class="text-gray-500">ログアウト</button>
