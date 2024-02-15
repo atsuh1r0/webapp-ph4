@@ -74,16 +74,6 @@ Chart.register(ChartDataLabels);
 
 // 学習言語
 {
-  // const languages = [
-  //   {name: 'HTML', hour: 30, color: '#0000CD'},
-  //   {name: 'CSS', hour: 20, color: '#4169E1'},
-  //   {name: 'JavaScript', hour: 10, color: '#4682B4'},
-  //   {name: 'PHP', hour: 5, color: '#20B2AA'},
-  //   {name: 'Laravel', hour: 5, color: '#9370DB'},
-  //   {name: 'SQL', hour: 20, color: '#8A2BE2'},
-  //   {name: 'SHELL', hour: 20, color: '#00008B'},
-  //   {name: '情報システム基礎知識（その他）', hour: 10, color: '#4B0082'},
-  // ];
   fetch('/get-languagesPieChart-data', {
     method: 'GET',
     headers: {
@@ -92,24 +82,22 @@ Chart.register(ChartDataLabels);
   })
   .then(response => response.json())
   .then(languages => {
-
     const ctx = document.getElementById('languagesPieChart');
+    let languagesName = [];
+    let languagesHour = [];
+    let languagesColor = [];
+    languages.forEach((element) => {
+      languagesName.push(element.name);
+      languagesHour.push(element.hour);
+      languagesColor.push(element.color);
+    })
     const myChart = new Chart(ctx, {
       type: 'doughnut',
       data: {
-          labels: [languages[0].name, languages[1].name, languages[2].name, languages[3].name, languages[4].name, languages[5].name, languages[6].name, languages[7].name],
+          labels: languagesName,
           datasets: [{
-            data: [languages[0].hour, languages[1].hour, languages[2].hour, languages[3].hour, languages[4].hour, languages[5].hour, languages[6].hour, languages[7].hour],
-            backgroundColor: [
-              languages[0].color,
-              languages[1].color,
-              languages[2].color,
-              languages[3].color,
-              languages[4].color,
-              languages[5].color,
-              languages[6].color,
-              languages[7].color,
-            ],
+            data: languagesHour,
+            backgroundColor: languagesColor,
             parsing: {
               yAxisKey: 'net'
             }
@@ -135,16 +123,11 @@ Chart.register(ChartDataLabels);
     });
 
     const languagesChartWrapper = document.getElementById('languagesChartWrapper');
-    let languagesList = `<div class="contents-list">`
-    + `<div><span style="color:${languages[0].color}">●</span>${languages[0].name}</div>`
-    + `<div><span style="color:${languages[1].color}">●</span>${languages[1].name}</div>`
-    + `<div><span style="color:${languages[2].color}">●</span>${languages[2].name}</div>`
-    + `<div><span style="color:${languages[3].color}">●</span>${languages[3].name}</div>`
-    + `<div><span style="color:${languages[4].color}">●</span>${languages[4].name}</div>`
-    + `<div><span style="color:${languages[5].color}">●</span>${languages[5].name}</div>`
-    + `<div><span style="color:${languages[6].color}">●</span>${languages[6].name}</div>`
-    + `<div><span style="color:${languages[7].color}">●</span>${languages[7].name}</div>`
-    + `</div>`;
+    let languagesList = `<div class="contents-list">`;
+    languages.forEach((element) => {
+      languagesList += `<div><span style="color:${element.color}">●</span>${element.name}</div>`;
+    });
+    languagesList += `</div>`;
     languagesChartWrapper.insertAdjacentHTML("beforeend", languagesList);
   })
   .catch(error => {
@@ -155,11 +138,6 @@ Chart.register(ChartDataLabels);
 
 // 学習コンテンツ
 {
-  // const contents = [
-  //   {name: 'N予備校', hour: 40, color: '#0000CD'},
-  //   {name: 'ドットインストール', hour: 60, color: '#1E90FF'},
-  //   {name: 'POSSE課題', hour : 40, color: '#00BFFF'},
-  // ];
   fetch('/get-contentsPieChart-data', {
     method: 'GET',
     headers: {
@@ -170,18 +148,21 @@ Chart.register(ChartDataLabels);
   .then(contents => {
 
     const ctx = document.getElementById('contentsPieChart');
-    
+    let contentsName = [];
+    let contentsHour = [];
+    let contentsColor = [];
+    contents.forEach((element) => {
+      contentsName.push(element.name);
+      contentsHour.push(element.hour);
+      contentsColor.push(element.color);
+    })
     const myChart = new Chart(ctx, {
       type: 'doughnut',
       data: {
-        labels: [contents[0].name, contents[1].name, contents[2].name],
+        labels: contentsName,
         datasets: [{
-          data: [contents[0].hour, contents[1].hour, contents[2].hour],
-          backgroundColor: [
-            contents[0].color,
-            contents[1].color,
-            contents[2].color,
-          ],
+          data: contentsHour,
+          backgroundColor: contentsColor,
         }],
       },
       options: {
@@ -204,11 +185,11 @@ Chart.register(ChartDataLabels);
     });
     
     const contentsChartWrapper = document.getElementById('contentsChartWrapper');
-    let contentsList = `<div class="contents-list">`
-    + `<div><span style="color:${contents[0].color}">●</span>${contents[0].name}</div>`
-    + `<div><span style="color:${contents[1].color}">●</span>${contents[1].name}</div>`
-    + `<div><span style="color:${contents[2].color}">●</span>${contents[2].name}</div>`
-    + `</div>`;
+    let contentsList = `<div class="contents-list">`;
+    contents.forEach((element) => {
+      contentsList += `<div><span style="color:${element.color}">●</span>${element.name}</div>`;
+    });
+    contentsList += `</div>`;
     contentsChartWrapper.insertAdjacentHTML("beforeend", contentsList);
   })
     .catch(error => {
