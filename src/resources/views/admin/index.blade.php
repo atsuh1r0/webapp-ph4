@@ -27,6 +27,7 @@
                 <tr>
                     <th>名前</th>
                     <th>メールアドレス</th>
+                    <th>削除</th>
                 </tr>
             </thead>
             <tbody>
@@ -34,6 +35,14 @@
                 <tr>
                     <td>{{ $user->name }}</td>
                     <td>{{ $user->email }}</td>
+                    <td>
+                        <form method="POST" action="{{ route('admin.user.delete') }}">
+                            @csrf
+                            @method('DELETE')
+                            <input type="hidden" name="id" value="{{ $user->id }}">
+                            <button type="submit">削除</button>
+                        </form>
+                    </td>
                 </tr>
                 @endforeach
             </tbody>
@@ -57,6 +66,13 @@
                 <label for="password_confirmation">パスワード（確認）</label>
                 <input id="password_confirmation" type="password" name="password_confirmation" required>
             </div>
+            <div>
+                <label for="is_admin">権限</label>
+                <select id="is_admin" name="is_admin">
+                    <option value="0">一般ユーザー</option>
+                    <option value="1">管理者</option>
+                </select>
+            </div>
             <button type="submit">登録</button>
         </form>
     </main>
@@ -70,6 +86,16 @@
     @if(session('error_user_register'))
     <script>
         toastr.error('ユーザーの登録に失敗しました。');
+    </script>
+    @endif
+    @if(session('success_user_delete'))
+    <script>
+        toastr.success('ユーザーを削除しました。');
+    </script>
+    @endif
+    @if(session('error_user_delete'))
+    <script>
+        toastr.error('ユーザーの削除に失敗しました。');
     </script>
     @endif
 </body>
