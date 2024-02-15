@@ -44,6 +44,9 @@ Route::middleware('auth')->group(function () {
         Route::post('/admin/content/register', [App\Http\Controllers\AdminController::class, 'registerContent'])->name('admin.content.register');
         Route::delete('/admin/content/delete', [App\Http\Controllers\AdminController::class, 'deleteContent'])->name('admin.content.delete');
     });
+
+    Route::get('/news', [App\Http\Controllers\NewsController::class, 'index'])->name('news.index');
+    Route::get('/news/{id}', [App\Http\Controllers\NewsController::class, 'detail'])->name('news.detail');
 });
 
 require __DIR__ . '/auth.php';
