@@ -18,6 +18,11 @@ class StudyTimeController extends Controller
     {
         $user = Auth::user();
 
+        // 言語とコンテンツの一覧を取得
+        // 登録の際に使用するため、論理削除したデータは取得しない
+        $languages = Languages::all();
+        $contents = Contents::all();
+
         // 現在が何周目かを取得
         $currentWeek = Date::now()->weekOfMonth;
 
@@ -32,7 +37,9 @@ class StudyTimeController extends Controller
             ->with('monthStudyHour', $monthStudyHour)
             ->with('totalStudyHour', $totalStudyHour)
             ->with('displayYear', Date::now()->year)
-            ->with('displayMonth', Date::now()->month);
+            ->with('displayMonth', Date::now()->month)
+            ->with('languages', $languages)
+            ->with('contents', $contents);
     }
 
     /**
@@ -77,7 +84,8 @@ class StudyTimeController extends Controller
     {
         $user = Auth::user();
 
-        $languages = Languages::all();
+        // 論理削除したデータも取得する
+        $languages = Languages::withTrashed()->get();
         $data = collect();
         foreach ($languages as $language) {
             // ここで時間を計算する
@@ -104,7 +112,8 @@ class StudyTimeController extends Controller
     {
         $user = Auth::user();
 
-        $contents = Contents::all();
+        // 論理削除したデータも取得する
+        $contents = Contents::withTrashed()->get();
         $data = collect();
         foreach ($contents as $content) {
             // ここで時間を計算する

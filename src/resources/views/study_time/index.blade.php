@@ -82,28 +82,17 @@
                 <p>学習日</p>
                 <input type="date" name="date" required>
                 <p>学習言語</p>
+                @foreach ($languages as $language)
                 <label>
-                    <input type="checkbox" name="languages[]" value="1">HTML
+                    <input type="checkbox" name="languages[]" value="{{ $language->id }}">{{ $language->name }}
                 </label>
-                <label>
-                    <input type="checkbox" name="languages[]" value="2">CSS
-                </label>
-                <label>
-                    <input type="checkbox" name="languages[]" value="3">JavaScript
-                </label>
-                <label>
-                    <input type="checkbox" name="languages[]" value="4">PHP
-                </label>
+                @endforeach
                 <p>学習コンテンツ</p>
+                @foreach ($contents as $content)
                 <label>
-                    <input type="checkbox" name="contents[]" value="1">ドットインストール
+                    <input type="checkbox" name="contents[]" value="{{ $content->id }}">{{ $content->name }}
                 </label>
-                <label>
-                    <input type="checkbox" name="contents[]" value="2">Progate
-                </label>
-                <label>
-                    <input type="checkbox" name="contents[]" value="3">Udemy
-                </label>
+                @endforeach
                 <p>学習時間</p>
                 <input type="number" name="time" required>
                 <button type="submit" class="block mx-auto p-4 text-white bg-gradient-to-r from-blue-500 to-blue-100">記録</button>
