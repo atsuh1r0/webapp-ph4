@@ -103,6 +103,19 @@
                     @endforeach
                 </tbody>
             </table>
+            <h3>学習言語新規作成</h3>
+            <form method="POST" action="{{ route('admin.language.register') }}">
+                @csrf
+                <div>
+                    <label for="name">言語名</label>
+                    <input id="name" type="text" name="name" required autofocus>
+                </div>
+                <div>
+                    <label for="color">色</label>
+                    <input id="color" type="color" name="color" required>
+                </div>
+                <button type="submit">登録</button>
+            </form>
         </div>
         <div>
             <h2>学習コンテンツ管理</h2>
@@ -130,6 +143,19 @@
                     @endforeach
                 </tbody>
             </table>
+            <h3>学習コンテンツ新規作成</h3>
+            <form method="POST" action="{{ route('admin.content.register') }}">
+                @csrf
+                <div>
+                    <label for="name">コンテンツ名</label>
+                    <input id="name" type="text" name="name" required autofocus>
+                </div>
+                <div>
+                    <label for="color">色</label>
+                    <input id="color" type="color" name="color" required>
+                </div>
+                <button type="submit">登録</button>
+            </form>
         </div>
     </main>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -154,6 +180,16 @@
         toastr.error('ユーザーの削除に失敗しました。');
     </script>
     @endif
+    @if(session('success_language_register'))
+    <script>
+        toastr.success('言語を登録しました。');
+    </script>
+    @endif
+    @if(session('error_language_register'))
+    <script>
+        toastr.error('言語の登録に失敗しました。');
+    </script>
+    @endif
     @if(session('success_language_delete'))
     <script>
         toastr.success('言語を削除しました。');
@@ -162,6 +198,26 @@
     @if(session('error_language_delete'))
     <script>
         toastr.error('言語の削除に失敗しました。');
+    </script>
+    @endif
+    @if(session('success_content_register'))
+    <script>
+        toastr.success('コンテンツを登録しました。');
+    </script>
+    @endif
+    @if(session('error_content_register'))
+    <script>
+        toastr.error('コンテンツの登録に失敗しました。');
+    </script>
+    @endif
+    @if(session('success_content_delete'))
+    <script>
+        toastr.success('コンテンツを削除しました。');
+    </script>
+    @endif
+    @if(session('error_content_delete'))
+    <script>
+        toastr.error('コンテンツの削除に失敗しました。');
     </script>
     @endif
 </body>

@@ -54,6 +54,25 @@ class AdminController extends Controller
         }
     }
 
+    public function registerLanguage(Request $request)
+    {
+        try {
+            $request->validate([
+                'name' => 'required|string|max:255',
+                'color' => 'required|string|max:255',
+            ]);
+
+            Languages::create([
+                'name' => $request->name,
+                'color' => $request->color,
+            ]);
+
+            return redirect()->route('admin.index')->with('success_language_register', '言語を登録しました');
+        } catch (\Exception $e) {
+            return redirect()->route('admin.index')->with('error_language_register', '言語の登録に失敗しました');
+        }
+    }
+
     public function deleteLanguage(Request $request)
     {
         try {
@@ -62,6 +81,25 @@ class AdminController extends Controller
             return redirect()->route('admin.index')->with('success_language_delete', '言語を削除しました');
         } catch (\Exception $e) {
             return redirect()->route('admin.index')->with('error_language_delete', '言語の削除に失敗しました');
+        }
+    }
+
+    public function registerContent(Request $request)
+    {
+        try {
+            $request->validate([
+                'name' => 'required|string|max:255',
+                'color' => 'required|string|max:255',
+            ]);
+
+            Contents::create([
+                'name' => $request->name,
+                'color' => $request->color,
+            ]);
+
+            return redirect()->route('admin.index')->with('success_content_register', 'コンテンツを登録しました');
+        } catch (\Exception $e) {
+            return redirect()->route('admin.index')->with('error_content_register', 'コンテンツの登録に失敗しました');
         }
     }
 
