@@ -28,6 +28,7 @@
                     <tr>
                         <th>名前</th>
                         <th>メールアドレス</th>
+                        <th>権限</th>
                         <th>削除</th>
                     </tr>
                 </thead>
@@ -36,6 +37,7 @@
                     <tr>
                         <td>{{ $user->name }}</td>
                         <td>{{ $user->email }}</td>
+                        <td>{{ $user->is_admin ? '管理者' : '一般ユーザー' }}</td>
                         <td>
                             <form method="POST" action="{{ route('admin.user.delete') }}">
                                 @csrf
