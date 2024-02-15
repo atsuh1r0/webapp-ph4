@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('color');
             $table->timestamps();
+            $table->softDeletes();
         });
 
         Schema::create('contents', function (Blueprint $table) {
@@ -23,6 +24,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('color');
             $table->timestamps();
+            $table->softDeletes();
         });
 
         Schema::create('study_times', function (Blueprint $table) {
@@ -33,6 +35,7 @@ return new class extends Migration
             $table->foreignId('content_id')->constrained('contents');
             $table->foreignId('user_id')->constrained('users');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

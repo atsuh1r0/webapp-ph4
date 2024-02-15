@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Languages;
+use App\Models\Contents;
 use Illuminate\Http\Request;
 use App\Models\User;
 
@@ -10,7 +12,12 @@ class AdminController extends Controller
     public function index()
     {
         $users = User::all();
-        return view('admin.index')->with('users', $users);
+        $languages = Languages::all();
+        $contents = Contents::all();
+        return view('admin.index')
+            ->with('users', $users)
+            ->with('languages', $languages)
+            ->with('contents', $contents);
     }
 
     public function registerUser(Request $request)
@@ -39,10 +46,33 @@ class AdminController extends Controller
     public function deleteUser(Request $request)
     {
         try {
+            // 物理削除
             User::destroy($request->id);
             return redirect()->route('admin.index')->with('success_user_delete', 'ユーザーを削除しました');
         } catch (\Exception $e) {
             return redirect()->route('admin.index')->with('error_user_delete', 'ユーザーの削除に失敗しました');
+        }
+    }
+
+    public function deleteLanguage(Request $request)
+    {
+        try {
+            // 論理削除
+            Languages::find($request->id)->delete();
+            return redirect()->route('admin.index')->with('success_language_delete', '言語を削除しました');
+        } catch (\Exception $e) {
+            return redirect()->route('admin.index')->with('error_language_delete', '言語の削除に失敗しました');
+        }
+    }
+
+    public function deleteContent(Request $request)
+    {
+        try {
+            // 論理削除
+            Contents::find($request->id)->delete();
+            return redirect()->route('admin.index')->with('success_content_delete', 'コンテンツを削除しました');
+        } catch (\Exception $e) {
+            return redirect()->route('admin.index')->with('error_content_delete', 'コンテンツの削除に失敗しました');
         }
     }
 }

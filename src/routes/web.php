@@ -39,6 +39,8 @@ Route::middleware('auth')->group(function () {
         Route::get('/admin', [App\Http\Controllers\AdminController::class, 'index'])->name('admin.index');
         Route::post('/admin/user/register', [App\Http\Controllers\AdminController::class, 'registerUser'])->name('admin.user.register');
         Route::delete('/admin/user/delete', [App\Http\Controllers\AdminController::class, 'deleteUser'])->name('admin.user.delete');
+        Route::delete('/admin/language/delete', [App\Http\Controllers\AdminController::class, 'deleteLanguage'])->name('admin.language.delete');
+        Route::delete('/admin/content/delete', [App\Http\Controllers\AdminController::class, 'deleteContent'])->name('admin.content.delete');
     });
 });
 
